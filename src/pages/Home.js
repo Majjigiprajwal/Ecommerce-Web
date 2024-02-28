@@ -10,20 +10,21 @@ const Home = () => {
     const [isLoading,setisLoading] = useState(true)
 
     const fetchFilms = async ()=>{
+             
         try {
             const response = await fetch('https://swapi.dve/api/films')
-
             const res = await response.json()
-
+            
             setdata(res)
             setisLoading(false)
-
         }
         catch(error){
+             setInterval(()=>{
+                fetchFilms()
+             },5000)
             console.log(error)
         }
     }
-
     fetchFilms()
   return (
     <div className="w-full min-h-screen ">
