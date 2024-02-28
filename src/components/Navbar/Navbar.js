@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from "react-icons/fa";
+import { useProductContext } from '../../context/ProductContext';
 
 const Navbar = () => {
+
+    const {state} = useProductContext()
   return (
     <nav className="bg-black p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -11,7 +14,7 @@ const Navbar = () => {
         <div className="space-x-10 flex items-center font-medium text-2xl mr-10">
           <Link to="/home" className="text-white">Home</Link>
           <Link to="/store" className="text-white">Store</Link>
-          <Link to="/cart" className="text-white text-3xl flex items-center"><FaShoppingCart /> <span className="mb-6 text-base font-bold">1</span></Link>
+          <Link to="/cart" className="text-white text-3xl flex items-center"><FaShoppingCart /> <span className="mb-6 text-base font-bold">{state.cart.length}</span></Link>
         </div>
       </div>
     </nav>
