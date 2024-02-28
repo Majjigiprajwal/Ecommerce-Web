@@ -1,57 +1,13 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import ProductList from '../components/Product/ProductList'
 import SongList from '../components/Product/SongList'
 
-const productsArr = [
-
-    {
-    id:1,
-
-    title: 'Colors',
-    
-    price: 100,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-    
-    },
-    
-    {
-    id:2,
-
-    title: 'Black and white Colors',
-    
-    price: 50,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-    
-    },
-    
-    {
-    id:3,
-
-    title: 'Yellow and Black Colors',
-    
-    price: 70,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-    
-    },
-    
-    {
-    id:4,
-
-    title: 'Blue Color',
-    
-    price: 100,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%204.png',
-    
-    }
-    
-    ]
 
 const Home = () => {
+
+    const [data,setdata] = useState([])
+    const [isLoading,setisLoading] = useState(true)
 
     const fetchFilms = async ()=>{
         try {
@@ -59,7 +15,8 @@ const Home = () => {
 
             const res = await response.json()
 
-            console.log(res)
+            setdata(res)
+            setisLoading(false)
 
         }
         catch(error){
@@ -80,13 +37,11 @@ const Home = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center mt-10 ">
-        <SongList />
-        <SongList />
-        <SongList />
-        <SongList />
-        <SongList />
-        <SongList />
-        <SongList />
+        {
+            isLoading ? <p>loading</p> : data.map((data)=>{
+                return <></>
+            })
+        }
       </div>
     </div>
   )
