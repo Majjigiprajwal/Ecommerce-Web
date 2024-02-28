@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import { FaShoppingCart } from "react-icons/fa";
 import { useProductContext } from '../../context/ProductContext';
 
@@ -9,12 +9,13 @@ const Navbar = () => {
   return (
     <nav className="bg-black p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white text-xl font-semibold">Your Logo</Link>
+        <NavLink to="/home" className="text-white text-xl font-semibold">Your Logo</NavLink>
         
         <div className="space-x-10 flex items-center font-medium text-2xl mr-10">
-          <Link to="/home" className="text-white">Home</Link>
-          <Link to="/store" className="text-white">Store</Link>
-          <Link to="/cart" className="text-white text-3xl flex items-center"><FaShoppingCart /> <span className="mb-6 text-base font-bold">{state.cart.length}</span></Link>
+          <NavLink to="/home" className="text-white">Home</NavLink>
+          <NavLink to="/store" className="text-white">Store</NavLink>
+          <NavLink to="/about" className="text-white">About</NavLink>
+          <NavLink to="/cart" className="text-white text-3xl flex items-center"><FaShoppingCart /> <span className="mb-6 text-base font-bold">{state.cart.length}</span></NavLink>
         </div>
       </div>
     </nav>
