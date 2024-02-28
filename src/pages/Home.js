@@ -52,6 +52,22 @@ const productsArr = [
     ]
 
 const Home = () => {
+
+    const fetchFilms = async ()=>{
+        try {
+            const response = await fetch('https://swapi.dve/api/films')
+
+            const res = await response.json()
+
+            console.log(res)
+
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    fetchFilms()
   return (
     <div className="w-full min-h-screen ">
       <div>
