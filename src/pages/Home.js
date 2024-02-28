@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import ProductList from '../components/Product/ProductList'
 import SongList from '../components/Product/SongList'
@@ -6,26 +6,24 @@ import SongList from '../components/Product/SongList'
 
 const Home = () => {
 
-    const [data,setdata] = useState([])
+    const [movies,setMovies] = useState([])
     const [isLoading,setisLoading] = useState(true)
-
-    const fetchFilms = async ()=>{
-             
-        try {
-            const response = await fetch('https://swapi.dve/api/films')
-            const res = await response.json()
-            
-            setdata(res)
+      
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('https://swapi.dve/api/films');
+            const data = await response.json();
+            setMovies(data);
             setisLoading(false)
-        }
-        catch(error){
-             setInterval(()=>{
-                fetchFilms()
-             },5000)
-            console.log(error)
-        }
-    }
-    fetchFilms()
+          } catch (error) {
+            console.error('Error fetching movies:', error.message);
+          }
+        };
+        fetchData();
+
+    },[])
+       
   return (
     <div className="w-full min-h-screen ">
       <div>
@@ -39,7 +37,7 @@ const Home = () => {
       </div>
       <div className="flex flex-col items-center justify-center mt-10 ">
         {
-            isLoading ? <p>loading</p> : data.map((data)=>{
+            isLoading ? <p>loading</p> : movies.map((data)=>{
                 return <></>
             })
         }
