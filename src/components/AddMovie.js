@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 import classes from './AddMovie.module.css';
 
 function AddMovie(props) {
+
+    console.log(props)
   const titleRef = useRef('');
   const openingTextRef = useRef('');
   const releaseDateRef = useRef('');

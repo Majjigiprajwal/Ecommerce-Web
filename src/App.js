@@ -14,6 +14,7 @@ function App() {
     setError(null);
     try {
       const response = await fetch('https://react-http-6b4a6.firebaseio.com/movies.json');
+      console.log(response)
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
