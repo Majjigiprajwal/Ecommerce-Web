@@ -1,11 +1,13 @@
 import React from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import ProductList from '../components/Product/ProductList'
+import SongList from '../components/Product/SongList'
 
 const productsArr = [
 
     {
-    
+    id:1,
+
     title: 'Colors',
     
     price: 100,
@@ -15,7 +17,8 @@ const productsArr = [
     },
     
     {
-    
+    id:2,
+
     title: 'Black and white Colors',
     
     price: 50,
@@ -25,7 +28,8 @@ const productsArr = [
     },
     
     {
-    
+    id:3,
+
     title: 'Yellow and Black Colors',
     
     price: 70,
@@ -35,7 +39,8 @@ const productsArr = [
     },
     
     {
-    
+    id:4,
+
     title: 'Blue Color',
     
     price: 100,
@@ -52,11 +57,20 @@ const Home = () => {
       <div>
         <Navbar />
       </div>
-      <div className="bg-slate-500 h-1/12 text-center font-serif">
+      <div className="bg-slate-500 h-1/12 text-center font-serif flex flex-col justify-center items-center pb-5">
         <h1 className="text-center text-black text-9xl">Generic</h1>
+        <div className="border-2 border-blue-500 w-fit ">
+            <p className="text-3xl font-serif ">Get our latest Album</p>
+        </div>
       </div>
-      <div>
-        <ProductList products={productsArr} />
+      <div className="flex flex-col items-center justify-center mt-10 ">
+        <SongList />
+        <SongList />
+        <SongList />
+        <SongList />
+        <SongList />
+        <SongList />
+        <SongList />
       </div>
     </div>
   )
