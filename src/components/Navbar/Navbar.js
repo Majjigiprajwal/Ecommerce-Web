@@ -1,25 +1,88 @@
-import React from 'react';
-import { NavLink} from 'react-router-dom';
-import { FaShoppingCart } from "react-icons/fa";
-import { useProductContext } from '../../context/ProductContext';
+import React, { useContext } from "react";
+import { Button } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Context from "../../Context";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-
-    const {state} = useProductContext()
+function NavbarCom({ display }) {
+  const ctx = useContext(Context);
+  const navigate = useNavigate();
+  function logInPage() {
+    navigate("/logIn");
+  }
   return (
-    <nav className="bg-black p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <NavLink to="/home" className="text-white text-xl font-semibold">Your Logo</NavLink>
-        
-        <div className="space-x-10 flex items-center font-medium text-2xl mr-10">
-          <NavLink to="/home" className="text-white">Home</NavLink>
-          <NavLink to="/store" className="text-white">Store</NavLink>
-          <NavLink to="/about" className="text-white">About</NavLink>
-          <NavLink to="/cart" className="text-white text-3xl flex items-center"><FaShoppingCart /> <span className="mb-6 text-base font-bold">{state.cart.length}</span></NavLink>
-        </div>
-      </div>
-    </nav>
-  );
-};
+    <Navbar expand="md" className="bg-body-dark" bg="dark" data-bs-theme="dark">
+      <Container>
+        <Navbar.Brand href="#home" style={{ fontSize: "25px" }}>
+          The Generics
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto text-center">
+            <NavLink to={"/"} className="nav-link d-inline">
+              Home
+            </NavLink>
+            {ctx.isLogIn && (
+              <>
+                <NavLink to={"/products"} className="nav-link d-inline">
+                  Store
+                </NavLink>
+                <NavLink to={"/contact"} className="nav-link d-inline">
+                  Contact
+                </NavLink>
+              </>
+            )}
+            <NavLink to={"/about"} className="nav-link d-inline">
+              About
+            </NavLink>
+            {ctx.isLogIn && display && (
+              <>
+                <NavLink to={"/profile"} className="nav-link d-inline">
+                  Profile
+                </NavLink>
+              </>
+            )}
+            {ctx.isLogIn && display && (
+              <>
+                <Nav.Link className="p-0 align-self-center w-100 ms-md-2">
+                  <div className="d-grid">
+                    <Button
+                      variant="light"
+                      size="sm"
+                      className="px-3 fw-semibold"
+                      onClick={ctx.openCart}
+                    >
+                      Cart
+                      {ctx.CartList.length > 0
+                        ? ` - ${ctx.CartList.length}`
+                        : ""}
+                    </Button>
+                  </div>
+                </Nav.Link>
+              </>
+            )}
 
-export default Navbar;
+            {!ctx.isLogIn && (
+              <Nav.Link className="p-0 align-self-center w-100 ms-md-2">
+                <div className="d-grid">
+                  <Button
+                    variant="light"
+                    size="sm"
+                    className="px-3 fw-semibold"
+                    onClick={logInPage}
+                  >
+                    Log In
+                  </Button>
+                </div>
+              </Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+
+export default NavbarCom;

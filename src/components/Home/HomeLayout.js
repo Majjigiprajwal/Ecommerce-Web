@@ -2,31 +2,30 @@ import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function About() {
+function HomeLayout() {
   const navigate = useNavigate();
 
   function contactHandler() {
     navigate("/contact");
   }
-
-  function homeHandler() {
-    navigate("/");
+  function aboutHandler() {
+    navigate("/about");
   }
-
   return (
     <>
-      <Container className="py-3">
-        <h2 className="text-dark text-center mt-2 mb-4">About Us</h2>
+      <Container className="pt-3 pb-5">
+        <h2 className="text-dark text-center mb-3">Latest Tour</h2>
         <Row className="gap-4">
           <Col>
             <img
-              src="https://images.unsplash.com/photo-1517814761483-6769dab4e9c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+              src="https://d3vhc53cl8e8km.cloudfront.net/hello-staging/wp-content/uploads/2017/11/18074455/043-eff2016_0623_182213-9566_jsl.jpg"
               alt=""
               className="w-100 rounded shadow"
             />
           </Col>
           <Col md={true} className="d-flex align-items-center">
             <div>
+              <h3>Electric Forest</h3>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
                 pulvinar lectus in lacinia scelerisque. Cras maximus magna eros,
@@ -35,11 +34,11 @@ function About() {
                 molestie leo leo, ac euismod sem suscipit non. Nunc et elit nec
                 quam
               </p>
-              <Button variant="outline-dark" size="sm" onClick={homeHandler}>
-                Home
+              <Button variant="outline-dark" size="sm" onClick={aboutHandler}>
+                About Us
               </Button>{" "}
               <Button variant="dark" size="sm" onClick={contactHandler}>
-                Contact US
+                Contact Us
               </Button>
             </div>
           </Col>
@@ -49,4 +48,4 @@ function About() {
   );
 }
 
-export default About;
+export default HomeLayout;

@@ -1,78 +1,60 @@
-import React from 'react';
+import React, { useContext } from "react";
+import { Button, ListGroup } from "react-bootstrap";
+import CartItem from "./CartItem";
+import Context from "../../Context";
 
-const cartItems = [
-
-    {
-    
-    title: 'Colors',
-    
-    price: 100,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-    
-    quantity: 2,
-    
-    },
-    
-    {
-    
-    title: 'Black and white Colors',
-    
-    price: 50,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-    
-    quantity: 3,
-    
-    },
-    
-    {
-    
-    title: 'Yellow and Black Colors',
-    
-    price: 70,
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-    
-    quantity: 1,
-    
-    }
-    
-    ]
-
-const Cart = () => {
+function Cart() {
+  const ctx = useContext(Context);
+  const total = ctx.CartList.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
   return (
-    <div className="container mx-auto mt-8 pl-10 pr-10">
-      <h2 className="text-2xl font-semibold mb-4">Shopping Cart</h2>
+    <>
+      <div
+        className="position-fixed fixed-top bg-dark vw-100 vh-100 opacity-50"
+        style={{ top: "0", left: "0" }}
+        onClick={ctx.closeCart}
+      ></div>
 
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <div>
-          {cartItems.map((item) => (
-            <div key={Date.now()} className="flex items-center justify-between border-b py-2">
-              <div className="flex items-center">
-                <img src={item.imageUrl} alt={item.title} className="h-16 w-16 object-cover mr-4" />
-                <div>
-                  <p className="text-lg font-semibold">{item.title}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <p className="text-lg font-semibold">${item.price}</p>
-                <p className="text-gray-600 ml-4">Quantity: {item.quantity}</p>
-                <button
-                  className="ml-4 text-red-500 hover:text-red-700"
-                >
-                  Remove
-                </button>
-              </div>
+      <div
+        className=" position-absolute fixed-top"
+        style={{
+          minWidth: "300px",
+          maxWidth: "500px",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+        }}
+      >
+        <div className="bg-body-secondary p-3 rounded">
+          <h5 className="text-center">Cart</h5>
+          <ListGroup>
+            {ctx.CartList.map((item) => {
+              return <CartItem data={item} key={item.id} />;
+            })}
+          </ListGroup>
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <h6>
+              Total: <span className="fw-semibold">₹ {total}</span>
+            </h6>
+            <div>
+              <Button variant="outline-dark" size="sm" onClick={ctx.closeCart}>
+                Close
+              </Button>
+              <Button
+                variant="dark"
+                size="sm"
+                className="ms-2"
+                onClick={ctx.closeCart}
+              >
+                Checkout
+              </Button>
             </div>
-          ))}
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
-};
+}
 
 export default Cart;
