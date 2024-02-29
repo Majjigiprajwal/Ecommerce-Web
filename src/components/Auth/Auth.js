@@ -46,7 +46,7 @@ function Auth() {
           "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDLKmMRL800SGHidB6TAoC9jXvKuu24adw",
           { email: email, password: password, returnSecureToken: true }
         );
-        navigate("/");
+        navigate("/home");
         e.target.reset();
         ctx.logIn(response.data.idToken, email);
       } catch (error) {
