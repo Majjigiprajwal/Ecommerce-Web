@@ -43,11 +43,11 @@ const routerLogOut = createBrowserRouter([
   },
 ]);
 function App() {
-  const ctx = useContext(Context);
+  const context = useContext(Context);
   return (
     <>
-      {ctx.isLogIn && <RouterProvider router={router} />}
-      {!ctx.isLogIn && <RouterProvider router={routerLogOut} />}
+      {context.isLogIn && <RouterProvider router={router} />}
+      {!context.isLogIn && <RouterProvider router={routerLogOut} />}
     </>
   );
 }
