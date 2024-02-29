@@ -135,7 +135,6 @@ export function ContextProvider(props) {
     })();
   }
 
-  // VERY FIRST Check For Old Data                   <==================<<<<
   async function firstCheck(email) {
     try {
       const newResponse = await axios.get(`${crudUrl}/cart${email}`);
@@ -157,58 +156,21 @@ export function ContextProvider(props) {
     }
   }
 
-  // seting Login from localstorage (Later USE)                   <==================<<<<
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     const storeData = JSON.parse(localStorage.getItem("token"));
-  //     setToken(storeData.token);
-  //     setEmail(storeData.longemail);
-  //     (async () => {
-  //       const oldUser = await firstCheck(storeData.email);
-  //       if (oldUser.length > 0) {
-  //         getCartFromBackend(storeData.email, oldUser.cartId);
-  //       }
-  //     })();
-  //     setLogIn(true);
-  //   }
-  // }, [getCartFromBackend]);
-
-  // Logging Functions (Later USE)                   <==================<<<<
+  
   function logIn(id, email) {
-    // localStorage.setItem(
-    //   "token",
-    //   JSON.stringify({
-    //     token: id,
-    //     email: email.replace(/[^A-Za-z0-9]/gi, ""),
-    //     longemail: email,
-    //   })
-    // );
-    // setTimeout(() => {
-    //   localStorage.removeItem("token");
-    // }, 1000 * 60 * 5);
-    // const storeData = JSON.parse(localStorage.getItem("token"));
-    // (async () => {
-    //   const oldUser = await firstCheck(storeData.email);
-    //   if (oldUser.length > 0) {
-    //     getCartFromBackend(storeData.email, oldUser.cartId);
-    //   }
-    // })();
-    // setEmail(storeData.longemail);
     setEmail(email);
     setToken(id);
     setLogIn(true);
   }
 
-  // Log OUT fUCTION
   function logOut() {
-    // localStorage.removeItem("token");                   <==================<<<<
     setEmail("");
     setToken(null);
     setLogIn(false);
     setCartList([]);
   }
 
-  // Cart Function
+
   function openCart() {
     setCart(true);
   }
@@ -224,7 +186,6 @@ export function ContextProvider(props) {
       })
     ) {
       data.quantity = 1;
-      // addCartToBackend([...CartList, data]);                   <==================<<<<
       setCartList((oldCart) => {
         return [...oldCart, data];
       });
@@ -232,11 +193,7 @@ export function ContextProvider(props) {
   }
 
   function removeCart(id) {
-    // addCartToBackend(                   <==================<<<<
-    //   CartList.filter((item) => {
-    //     return item.id !== id;
-    //   })
-    // );
+    
     setCartList((oldCart) => {
       const cartData = oldCart.filter((item) => {
         return item.id !== id;
@@ -255,7 +212,7 @@ export function ContextProvider(props) {
       }
       return item;
     });
-    // addCartToBackend(newCartData);                   <==================<<<<
+   
     setCartList(newCartData);
   }
 
