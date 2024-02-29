@@ -1,87 +1,55 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useContext } from "react";
+import Products from "./Pages/Products";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./Pages/Home";
+import About from "./Pages/About";
+import Root from "./Pages/Root";
+import Error from "./Pages/Error";
+import Contact from "./Pages/Contact";
+import Product from "./Pages/Product";
+import Auth from "./Components/Auth/Auth";
+import Profile from "./Pages/Profile";
+import Context from "./Context";
 
-import MoviesList from './components/MoviesList';
-import AddMovie from './components/AddMovie';
-import './App.css';
-
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "/products", element: <Products /> },
+      { path: "/products/:productId", element: <Product /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/about", element: <About /> },
+      { path: "/profile", element: <Profile /> },
+    ],
+  },
+]);
+const routerLogOut = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "/about", element: <About /> },
+      { path: "/logIn", element: <Auth /> },
+      { path: "/products", element: <Auth /> },
+      { path: "/products/:productId", element: <Auth /> },
+      { path: "/contact", element: <Auth /> },
+      { path: "/profile", element: <Auth /> },
+    ],
+  },
+]);
 function App() {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchMoviesHandler = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch('https://react-http-6b4a6.firebaseio.com/movies.json');
-      console.log(response)
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-
-      const data = await response.json();
-
-      const loadedMovies = [];
-
-      for (const key in data) {
-        loadedMovies.push({
-          id: key,
-          title: data[key].title,
-          openingText: data[key].openingText,
-          releaseDate: data[key].releaseDate,
-        });
-      }
-
-      setMovies(loadedMovies);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchMoviesHandler();
-  }, [fetchMoviesHandler]);
-
-  async function addMovieHandler(movie) {
-    const response = await fetch('https://react-http-6b4a6.firebaseio.com/movies.json', {
-      method: 'POST',
-      body: JSON.stringify(movie),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await response.json();
-    console.log(data);
-  }
-
-  let content = <p>Found no movies.</p>;
-
-  if (movies.length > 0) {
-    content = <MoviesList movies={movies} />;
-  }
-
-  if (error) {
-    content = <p>{error}</p>;
-  }
-
-  if (isLoading) {
-    content = <p>Loading...</p>;
-  }
-
+  const ctx = useContext(Context);
   return (
-    <React.Fragment>
-      <section>
-        <AddMovie onAddMovie={addMovieHandler} />
-      </section>
-      <section>
-        <button onClick={fetchMoviesHandler}>Fetch Movies</button>
-      </section>
-      <section>{content}</section>
-    </React.Fragment>
+    <>
+      {ctx.isLogIn && <RouterProvider router={router} />}
+      {!ctx.isLogIn && <RouterProvider router={routerLogOut} />}
+    </>
   );
 }
 
 export default App;
-
-
